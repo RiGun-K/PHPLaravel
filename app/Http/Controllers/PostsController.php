@@ -7,7 +7,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller {
+    
+    // 생성자 지정
+    // 밑에 index() 부터 오는 모든것들은 middleware로 지정이 된다. = 즉 로그인화면 먼저 띄워준다 (사용자인증 먼저)
+    public function __construct()
+    {
+        $this->middleware(['auth'])->except(['index','show']);
+        // 단 예외로(except) index,show는 그대로 보여준다. 
+    }
 
+    public function show(Request $request, $id) {
+        // show(상세보기 페이지) 로 연결시켜서 id를 넘겨주어 받을 수 있다.
+        
+        $page = $request->page;
+        $post = Post::find($id);
+        
+
+        return view('posts.show', compact('post', 'page'));
+    }
 
     public function index() {
         // 방법 1)   $posts = Post::orderBy('created_at','desc')->get(); // 가장 최신글이 앞으로 오도록 설정
@@ -15,6 +32,7 @@ class PostsController extends Controller {
 
         // 방법 2) $posts = Post::paginate(2);  = 한 페이지에 값을 2개만 준다.
         $posts = Post::latest()->paginate(5);
+        // dd($posts); // died~ = 소스코드로 보기 
 
         return view('posts.index', ['posts'=>$posts]);
 
@@ -75,6 +93,6 @@ class PostsController extends Controller {
         = 새로고침하면 DB에 동일한 Data가 매번 저장됨
         */
 
-        
+
     }
 }
