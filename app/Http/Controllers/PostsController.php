@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostsController extends Controller {
     
@@ -53,6 +54,17 @@ class PostsController extends Controller {
     // 제출누르면 이 Request가 실행됨 title과 content 값을 받아서 input한다
     // store는 DB에 있는 데이터만 INSERT
     public function store(Request $request) {
+
+
+         // 내가 원하는 데이터로 왔는지 점검할 수 있다. 그게 아니면 자동으로 Back 시켜줌 ( 해킹방지)
+        $request->validate([
+            'title' => 'required|min:3',    // 최소 3자는 적어야 한다.
+            'content' => 'required',
+            'imageFile' => 'image|max:2000'
+            // 'file' => 'file' 이면 반드시 파일이 있어야 작성된다는 뜻 ! 
+
+            // 이때 조건이 충족안되면 에러 메세지를 보내준다 ! 이 설정은 create.blade.php 에서 설정
+        ]); 
         // $request->input['title'];
         // $request->input['content'];
             // 1 ) 방법
@@ -61,22 +73,30 @@ class PostsController extends Controller {
         $title = $request->title;     // $request 에 있는 name=title 값을 받아서 $title로 만든다.
         $content = $request->content;
             // 2) 방법
-    
-        
 
             // DB에 저장
         $post = new Post();     // Ctrl+i+Tab
         $post->title = $title;
         $post->content = $content;
+        // File 처리 , 내가 원하는 파일시스템 상의 위치에 원하는 이름으로
+        // 파일을 저장하고 그 파일 이름을 컬럼에 설정
+        // $post->image = $fileName;
+        if ($request->file('imageFile')) { 
+        $name = $request->file('imageFile')->getClientOriginalName();
+        
+        $extension = $request->file('imageFile')->extension();
+        
+        $nameWithoutExtension = Str::of($name)->basename('.'.$extension); // 이름.jpg 없앰
+        $fileName = $nameWithoutExtension . '_' . time() . '.' . $extension;    // 파일이름만 저장
 
-            // 내가 원하는 데이터로 왔는지 점검할 수 있다. 그게 아니면 자동으로 Back 시켜줌 ( 해킹방지)
-        $request->validate([
-            'title' => 'required|min:3',    // 최소 3자는 적어야 한다.
-            'content' => 'required'
+        // dd($name.' extension: '. $extension);
+        // dd($fileName);  = // 'spaceship'.'_'.'1234314134'.'jpg; 
 
-            // 이때 조건이 충족안되면 에러 메세지를 보내준다 ! 이 설정은 create.blade.php 에서 설정
-        ]);       
+     
+        $request->file('imageFile')->storeAs('public/images',$fileName);
 
+        $post->image = $fileName;
+        }
             // 로그인한 사용자의 user 객체를 준다. 마찬가지로 ctrl+i 해준다.
         $post->user_id = Auth::user()->id;      
 

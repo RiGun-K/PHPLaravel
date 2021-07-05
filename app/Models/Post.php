@@ -14,4 +14,11 @@ class Post extends Model
     // Post 테이블이 아닌 my_posts로 받는다.
     
     use HasFactory;
+
+    public function imagePath() {
+        // $path = '/storage/images';
+        $path = env('IMAGE_PATH', '/storage/images/');
+        $imageFile = $this->image ?? 'no_image.jpeg';
+        return $path.$imageFile;
+    }
 }

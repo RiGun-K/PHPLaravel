@@ -19,17 +19,31 @@
             <a href="{{ route('posts.index',['page'=>$page])}}">목록보기</a>
         </div>
         <div class="form-group">
-            <label for="title">Title</label>
+            <label for="title">제목</label>
             <input type="text" readonly
             name="title" class="form-control" id="title"
             value="{{ $post->title }}"     
             >
         </div>
+
         <div class="form-group">
-            <label for="content">Content</label>
+            <label for="content">내용</label>
             <textarea class="form-control" name="content" id="content" readonly>{{ $post->content }}
             </textarea>
         </div>
+
+        <div class="form-group">
+            <label for="imageFile">사진</label>
+            {{-- <div class="img-thumbnail" width="20%">
+                <img src="/storage/images/{{ $post->image ?? 'no_image.jpeg' }}" /> --}}
+            
+            <img class="img-thumbnail"
+                width="20%"
+                src="{{ $post->imagePath() }}" />
+            
+            
+        </div>
+
         <div class="form-group">
             <label>등록일</label>
             <input type="text" readonly

@@ -36,11 +36,14 @@
                 </span>
                 <!-- 전달하는 방식임 title 에 해당하는 값 -->
             
-                <div>
+                {{-- <div>
                     내용 : {{ $post->content }}
-                </div>
+                </div> --}}
+
+                <div>
                 <span>작성자 : {{ $post->created_at }}</span>
                 <!-- 전달하는 방식임 content 에 해당하는 값 -->
+                </div>
                 <hr>
             </li>
             @endforeach
