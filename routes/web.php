@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostsController;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,3 +42,13 @@ Route::get('/posts/index',[PostsController::class,'index'])->name('posts.index')
     // name()에는 route이름을 주었다
 
 Route::get('/posts/show/{id}',[PostsController::class,'show'])->name('post.show');
+
+Route::get('/posts/{post}',[PostsController::class, 'edit'])->name('post.edit');
+// edit으로 수정 페이지로 넘어갈때 아이디(id)값을 받아오자
+// PostsController 클래스에서 'edit'이라는 이름의 메소드를 만들고 name은 'post.edit'으로 만들자
+
+Route::put('/posts/{id}',[PostsController::class, 'update'])->name('post.update');
+// put방식이므로 update라는 메소드를 실행하여 업데이트 수행
+
+Route::delete('/posts/{id}',[PostsController::class, 'destroy'])->name('post.delete');
+// delete방식으로써 삭제버튼 누르면 삭제되도록 설정 

@@ -12,27 +12,28 @@
 
   </head>
   <body>
-
-    <div class="container">
     <h2> 게시글 작성 </h2>
-    <form action="/posts/store" method="post" enctype="multipart/form-data"> 
+    <form action="{{ route('post.update',['id'=>$post->id]) }}" method="post" enctype="multipart/form-data"> 
     <!-- mothod="get" = form 안의 데이터를 posts 방식으로 /posts/store로 넘기겠다. -->  
     @csrf
-    <div class="form-group">  
-      
+    
+    @method("put")
+    {{-- mothod spoofing --}}
+    
+      <div class="form-group">
+        
       <!-- 이때 store로 넘어갈때 Token하고 같이 넘어가도록 해야함 -->  
         <label for="title">제목</label>
-        <input type="text" name="title" placeholder="제목을 입력하세요." value="{{ old('title') }}"> 
+        <input type="text" name="title" placeholder="제목을 입력하세요." value="{{ old('title') ? old('title') : $post->title }}"> 
       
        <!-- title 작성에 대한 에러 메세지 설명-->
       @error('title')
           <div>{{ $message }} </div>
       @enderror
       </div>
-    
       <div class="form-group">
         <label for="content">내용</label>
-        <textarea class="content" name="content" cols="30" rows="3" placeholder="내용을 입력하세요." id="content" > {{ old('content') }} </textarea>   
+        <textarea class="content" name="content" cols="30" rows="3" placeholder="내용을 입력하세요." id="content" > {{ old('content') ? old('content') : $post->content }} </textarea>   
        <!--({  }) 을 작성해줌으로써 하나의 에러가 나면 모든 작성란이 전부 지워지지 않도록 설정-->
       
       @error('content')
@@ -40,7 +41,10 @@
       @enderror
       </div>
     <!-- name에 해당하는 title content 의 값을 key로 하여 입력받아 /posts/store로 넘기겠다. -->
-    
+      <div class="form-group">
+          <img class="img-thumbnail" width="20%" src="{{ $post->imagePath() }}">
+      </div>
+
       <div class="form-group">
         <label for="file">File<label>
         <input type="file" id="file" name="imageFile">
@@ -62,7 +66,3 @@
 </html>
 
 
-
-
-    
-   

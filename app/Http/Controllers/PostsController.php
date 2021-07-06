@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostsController extends Controller {
@@ -74,6 +75,7 @@ class PostsController extends Controller {
         $content = $request->content;
             // 2) 방법
 
+            
             // DB에 저장
         $post = new Post();     // Ctrl+i+Tab
         $post->title = $title;
@@ -81,24 +83,12 @@ class PostsController extends Controller {
         // File 처리 , 내가 원하는 파일시스템 상의 위치에 원하는 이름으로
         // 파일을 저장하고 그 파일 이름을 컬럼에 설정
         // $post->image = $fileName;
-        if ($request->file('imageFile')) { 
-        $name = $request->file('imageFile')->getClientOriginalName();
-        
-        $extension = $request->file('imageFile')->extension();
-        
-        $nameWithoutExtension = Str::of($name)->basename('.'.$extension); // 이름.jpg 없앰
-        $fileName = $nameWithoutExtension . '_' . time() . '.' . $extension;    // 파일이름만 저장
-
-        // dd($name.' extension: '. $extension);
-        // dd($fileName);  = // 'spaceship'.'_'.'1234314134'.'jpg; 
-
-     
-        $request->file('imageFile')->storeAs('public/images',$fileName);
-
-        $post->image = $fileName;
-        }
             // 로그인한 사용자의 user 객체를 준다. 마찬가지로 ctrl+i 해준다.
         $post->user_id = Auth::user()->id;      
+
+        if ($request->file('imageFile')) { 
+            $post ->image = $this -> uploadPostImage($request);
+         }
 
         $post->save();  
             // 메소드 이므로 () 묶는다.
@@ -113,6 +103,75 @@ class PostsController extends Controller {
         = 새로고침하면 DB에 동일한 Data가 매번 저장됨
         */
 
+       
+
+
+    }
+
+    
+    // id가 몇번글에 있는지 = '수정' form 클릭시 여기로 이동
+    public function edit(Post $post) {
+        
+        // $post = Post::find($id);
+        // $post = Post::where('id',$id)->first();
+
+        // 수정 폼 생성
+        return view('posts.edit')->with('post',$post);
+        // 'post'라는 변수이름으로 객체에 접근 
+    }
+
+    // id만 받는것이 아니라 변경할 내용도 받아야 함 ! 그것을 Request 객체로 받자 
+    // Request 객체는 Route 파라미터($id) 보다 앞에 와야함 !
+    public function update(Request $request, $id) {
+    
+        // vaildation 설정
+        $request->validate([
+            'title' => 'required|min:3',    // 최소 3자는 적어야 한다.
+            'content' => 'required',
+            'imageFile' => 'image|max:2000'
+        ]);
+        
+        // 이미지 파일 수정 (파일 시스템에서) 
+        // = 수정하면 기존 남아있는 이미지 파일을 처리 또는 삭제 등 모든 변화를 처리해야 함
+        // if($request->file('imageFile')) {
+        //     $imagePath = 'public/images/'.$post->image;
+        //     Storage::delete(imagePath);
+        //     $post->image = $this->uploadPostImage($request);
+
+        // }
+        
+
+
+        $post = Post::find($id);
+
+        // 게시글을 DB에서 수정
+        $post->title=$request->title;
+        $post->content=$request->content;
+        if ($request->file('imageFile')) { 
+            $imagePath = 'public/images/'.$post->image;
+            Storage::delete($imagePath);
+            $request -> file('imageFile'); 
+            $post -> image = $this -> uploadPostImage($request);
+        }
+        
+        $post->save();
+        return redirect()->route('post.show',['id'=>$id]);
+
+    }
+
+    public function uploadPostImage($request)
+    {
+        $name = $request->file('imageFile')->getClientOriginalName(); 
+        $extension = $request->file('imageFile')->extension();
+        $nameWithoutExtension = Str::of($name)->basename('.'.$extension); // 이름.jpg 없앰
+        $fileName = $nameWithoutExtension . '_' . time() . '.' . $extension;    // 파일이름만 저장
+        $request->file('imageFile')->storeAs('public/images',$fileName);
+
+        return $fileName;
+    }
+    public function destroy($id) {
+        // 게시글을 DB에서 삭제
+        // 단, DB에서 삭제하기 전에 파일 시스템에서 이미지 파일을 삭제하자 
 
     }
 }
