@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/posts/team', function () {
+    return view('posts.team');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
