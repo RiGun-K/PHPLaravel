@@ -144,6 +144,15 @@ class PostsController extends Controller {
 
         $post = Post::find($id);
 
+        // Authorization. 즉 수정 권한이 있는지 검사
+        // 즉, 로그인한 사용자와 게시글의 작성자가 같은지 체크
+            // if (auth()->user()->id != $post->user_id) {
+            //     abort(403);
+            // }
+        if($request->user()->cannot('update',$post)) {
+            abort(403);
+        }
+
         // 게시글을 DB에서 수정
         $post->title=$request->title;
         $post->content=$request->content;
@@ -178,6 +187,17 @@ class PostsController extends Controller {
         // 단, DB에서 삭제하기 전에 파일 시스템에서 이미지 파일을 삭제하자 
 
         $post = Post::findOrFail($id);  // id값을 찾는다 
+
+        // Authorization. 즉 수정 권한이 있는지 검사
+        // 즉, 로그인한 사용자와 게시글의 작성자가 같은지 체크
+            // if (auth()->user()->id != $post->user_id) {
+            //     abort(403);
+            // }
+        if($request->user()->cannot('delete',$post)) {
+            abort(403);
+        }
+
+
         $page = $request->page;
         // 이미지 파일이 있다면 삭제
         if ($post->image) {

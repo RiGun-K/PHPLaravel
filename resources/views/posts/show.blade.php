@@ -66,18 +66,23 @@
             >
         </div>
 
-        
-        <div class="flex">
-             <button class="btn btn-warning" onclick="location.href='{{ route('post.edit', ['post'=>$post->id, 'page'=>$page]) }}'">수정</button>
+        <!-- 로그인 할 경우에만 수정,삭제 버튼이 보이도록 하여라 -->
+    @auth
+        <!-- 유저아이디가 게시글 작성자의 아이디가 같다면 -->
+        @can('update',$post)
+            <div class="flex">
+                <button class="btn btn-warning" onclick="location.href='{{ route('post.edit', ['post'=>$post->id, 'page'=>$page]) }}'">수정</button>
+                
             
-           
-            <form action="{{ route('post.delete', ['id'=>$post->id, 'page'=>$page]) }}" method="post">
-                @csrf
-                @method("delete")
-                <button type="submit" class= "btn btn-danger">삭제</button>
-            </form>
-                  
-        </div>
+                <form action="{{ route('post.delete', ['id'=>$post->id, 'page'=>$page]) }}" method="post">
+                    @csrf
+                    @method("delete")
+                    <button type="submit" class= "btn btn-danger">삭제</button>
+                </form>
+                    
+            </div>
+        @endcan
+    @endauth
         
 
     </div>

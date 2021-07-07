@@ -19,22 +19,26 @@
             <form action="/posts/store" method="post" enctype="multipart/form-data"> 
             <!-- mothod="get" = form 안의 데이터를 posts 방식으로 /posts/store로 넘기겠다. -->  
             @csrf
-            <div class="input-group mb-4">  
+            <div class="mb-3">  
               <!-- 이때 store로 넘어갈때 Token하고 같이 넘어가도록 해야함 -->  
-                <span class="badge bg-primary">제목</span>
-                <input type="text" name="title" placeholder="제목을 입력하세요." value="{{ old('title') }}"> 
+                <label for="exampleFormControlInput1" class="form-label">제목</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요." value="{{ old('title') }}">
+                
+                
               
                <!-- title 작성에 대한 에러 메세지 설명-->
               @error('title')
                   <div>{{ $message }} </div>
               @enderror
               </div>
+
             
-              <div class="input-group mb-4">
-                <span class="badge bg-primary">내용</span>
-                <textarea class="content" name="content" cols="30" rows="5" placeholder="내용을 입력하세요." id="content" {{ old('content') }} > </textarea>   
-               <!--({  }) 을 작성해줌으로써 하나의 에러가 나면 모든 작성란이 전부 지워지지 않도록 설정-->
+              <div class="mt-3 mb-3">
+                <label for="exampleFormControlInput1" class="form-label" >내용</label>
+                <textarea class="form-control" name="content" id="content" cols="30" rows="5">{{ old('content') }}</textarea>
+                <!--({  }) 을 작성해줌으로써 하나의 에러가 나면 모든 작성란이 전부 지워지지 않도록 설정-->
               
+            
                
               @error('content')
                  <div>{{ $message }} </div>

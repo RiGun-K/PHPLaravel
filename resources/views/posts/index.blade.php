@@ -41,7 +41,7 @@
                 </div> --}}
 
                 <div>
-                <span>작성자 : {{ $post->created_at }}</span>
+                <span>작성일시 : {{ $post->created_at }}</span>
                 <!-- 전달하는 방식임 content 에 해당하는 값 -->
                 </div>
                 <hr>
