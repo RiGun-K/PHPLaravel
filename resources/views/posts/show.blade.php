@@ -28,7 +28,7 @@
 
         <div class="form-group">
             <label for="content">내용</label>
-            <textarea class="form-control" name="content" id="content" readonly>{{ $post->content }}
+            <textarea class="form-control" name="content" id="content" cols="30" rows="5" readonly>{{ $post->content }}
             </textarea>
         </div>
 

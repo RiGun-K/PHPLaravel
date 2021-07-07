@@ -15,7 +15,7 @@
   <body>
     <div class="container mt-5 mb-5">
         <!-- 'dashboard' 이동버튼 생성 -->
-        <a href="{{ route('dashboard') }}">Dashboard</a>
+        <a href="{{ route('dashboard') }}">처음으로</a>
         <h1>게시글 리스트</h1>
         <!-- 로그인 한 사용자면 나타나고 로그인 안하면 안보이도록 설정 s-->
         @auth
