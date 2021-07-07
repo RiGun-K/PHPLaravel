@@ -110,13 +110,13 @@ class PostsController extends Controller {
 
     
     // id가 몇번글에 있는지 = '수정' form 클릭시 여기로 이동
-    public function edit(Post $post) {
+    public function edit(Request $request, Post $post) {
         
         // $post = Post::find($id);
         // $post = Post::where('id',$id)->first();
 
         // 수정 폼 생성
-        return view('posts.edit')->with('post',$post);
+        return view('posts.edit', ['post'=>$post, 'page'=>$request->page]);
         // 'post'라는 변수이름으로 객체에 접근 
     }
 
@@ -155,7 +155,9 @@ class PostsController extends Controller {
         }
         
         $post->save();
-        return redirect()->route('post.show',['id'=>$id]);
+
+        return redirect()->route('post.show',['id'=>$id, 'page'=>$request->page]);
+
 
     }
 
@@ -169,9 +171,24 @@ class PostsController extends Controller {
 
         return $fileName;
     }
-    public function destroy($id) {
+
+    // 요청시 id와 페이지도 받는다
+    public function destroy(Request $request, $id) {
         // 게시글을 DB에서 삭제
         // 단, DB에서 삭제하기 전에 파일 시스템에서 이미지 파일을 삭제하자 
+
+        $post = Post::findOrFail($id);  // id값을 찾는다 
+        $page = $request->page;
+        // 이미지 파일이 있다면 삭제
+        if ($post->image) {
+            $imagePath = 'public/images/'.$post->image;
+            Storage::delete($imagePath);  // public/images 에서 삭제 
+        }
+
+        $post->delete();    // DB에서 삭제
+
+        return redirect()->route('posts.index', ['page'=>$page]);
+        
 
     }
 }

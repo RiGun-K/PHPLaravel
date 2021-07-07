@@ -13,7 +13,7 @@
   </head>
   <body>
     <h2> 게시글 작성 </h2>
-    <form action="{{ route('post.update',['id'=>$post->id]) }}" method="post" enctype="multipart/form-data"> 
+    <form action="{{ route('post.update',['id'=>$post->id, 'page'=>$page]) }}" method="post" enctype="multipart/form-data"> 
     <!-- mothod="get" = form 안의 데이터를 posts 방식으로 /posts/store로 넘기겠다. -->  
     @csrf
     
