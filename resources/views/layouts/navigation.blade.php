@@ -13,11 +13,15 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('시작화면') }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
-                        {{ __('Posts') }}
+                        {{ __('게시글') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('posts.mine')" :active="request()->routeIs('posts.mine')">
+                        {{ __('내가 쓴 글') }}
                     </x-nav-link>
                 </div>
             </div>

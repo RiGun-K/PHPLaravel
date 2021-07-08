@@ -46,6 +46,22 @@ class PostsController extends Controller {
         // // 첫번째 원소의 created 값을 찍어본다.
     }
 
+    public function myposts() {
+
+        // 현재 로그인한 사용자를 뽑아내고 -> posts()->paginate() = 페이지네이트까지 불러줘야 정상적으로 
+        // 이름이 같으면 최신글이 앞으로 오도록 orderBy('title','asc')->orderBy('created_at','desc')
+        // $posts = auth()->user()->posts()->orderBy('title','asc')->orderBy('created_at','desc')->paginate(5);
+        
+        // auth() = 전역함수 = 선언하지 않아도 바로바로 쓸 수 있다. 그 종류는 홈페이지에서 참고
+        $posts = auth()->user()->posts()->latest()->paginate(5);
+
+        return view('posts.index', compact('posts'));
+
+        
+        
+        
+    }
+
     public function create() {
         // dd('OK');
         return view('posts.create');

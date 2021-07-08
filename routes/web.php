@@ -35,6 +35,8 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
+
+Route::get('/posts/mypost',[PostsController::class,'myposts'])->name('posts.mine');
 Route::get('/posts/create',[PostsController::class,'create'])/* ->middleware(['auth']) */ ;
     // 게시글 작성 , 'auth'는 middleware를 거쳐서 오도록 설정 = dashboard 누르면 로그인 페이지 먼저 나오도록 
 
@@ -44,6 +46,8 @@ Route::post('/posts/store',[PostsController::class,'store'])->name('posts.store'
 Route::get('/posts/index',[PostsController::class,'index'])->name('posts.index');
     // redict를 사용하기 위해 생성 해준다. (다시 받아서 와야하기 때문에)
     // name()에는 route이름을 주었다
+
+
 
 Route::get('/posts/show/{id}',[PostsController::class,'show'])->name('post.show');
 

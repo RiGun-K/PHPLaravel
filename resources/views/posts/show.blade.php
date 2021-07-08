@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
     
 </head>
 <body>
     
     <div class="container">
-        <div class="m-5">
-            <a href="{{ route('posts.index',['page'=>$page])}}">목록보기</a>
+        <div class="mt-4" m-3>
+            <a href="{{ route('posts.index',['page'=>$page])}}" class="btn btn-primary" >목록보기</a>
         </div>
         <div class="form-group">
             <label for="title">제목</label>
@@ -28,9 +32,9 @@
 
         <div class="form-group">
             <label for="content">내용</label>
-            <textarea class="form-control" name="content" id="content" cols="30" rows="5" readonly>{{ $post->content }}
-            </textarea>
+            <div name="content" id="content"  readonly> {!! $post->content !!} </div>
         </div>
+        
 
         <div class="form-group">
             <label for="imageFile">사진</label>
@@ -62,30 +66,33 @@
             <label>작성자</label>
             <input type="text" readonly
             class="form-control"
-            value="{{ $post->user_id }}"
+            value="{{ $post->user->name }}"
             >
         </div>
 
+    </div>    
         <!-- 로그인 할 경우에만 수정,삭제 버튼이 보이도록 하여라 -->
-    @auth
+    <div class="container mt-3">    
+        @auth
         <!-- 유저아이디가 게시글 작성자의 아이디가 같다면 -->
-        @can('update',$post)
-            <div class="flex">
-                <button class="btn btn-warning" onclick="location.href='{{ route('post.edit', ['post'=>$post->id, 'page'=>$page]) }}'">수정</button>
-                
-            
-                <form action="{{ route('post.delete', ['id'=>$post->id, 'page'=>$page]) }}" method="post">
-                    @csrf
-                    @method("delete")
-                    <button type="submit" class= "btn btn-danger">삭제</button>
-                </form>
-                    
-            </div>
-        @endcan
-    @endauth
-        
-
-    </div>
+            @can('update',$post)
+                <div class="flex">
+                    <div>
+                        <a class="btn btn-warning" href='{{ route('post.edit', ['post'=>$post->id, 'page'=>$page]) }}'>수정</a>
+                        
+                    </div>
+                    <div>
+                        <form action="{{ route('post.delete', ['id'=>$post->id, 'page'=>$page]) }}" method="post">
+                            @csrf
+                            @method("delete")
+                            <button type="submit" class= "btn btn-danger">삭제</button>
+                        </form>
+                    </div>    
+                </div>
+            @endcan
+        @endauth
+    </div>    
+    
     
 </body>
 </html>
