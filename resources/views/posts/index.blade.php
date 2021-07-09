@@ -50,9 +50,17 @@
                 </div> --}}
 
                 <div>
-                <span>작성일시 : {{ $post->created_at->diffForHumans() }}</span>
+                <span>작성일시 : {{ $post->created_at->diffForHumans() }}
+                    
+                </span>
                 <!-- 전달하는 방식임 content 에 해당하는 값 -->
                 </div>
+                <div>
+                    <span>
+                        조회수 : {{ $post->count }} {{ $post->count > 0 ? Str::plural('view', $post->count) : 'view' }}
+                      <!-- 조회수가 0이면 '조회수' 글이 안뜨도록 -->
+                    </span>
+                </div>    
                 <hr>
             </li>
             @endforeach

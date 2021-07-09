@@ -41,7 +41,7 @@
 
         <div class="form-group">
           <label for="content">내용</label>
-          <input type="content" name="content" id="content" row="5" placeholder="내용을 입력하세요."  {{ old('content') ? old('content') : $post->content }}>    
+          <textarea class="form-control" name="content" id="content" row="5" placeholder="내용을 입력하세요.">  {{ old('content') ? old('content') : $post->content }} </textarea>    
         <!--({  }) 을 작성해줌으로써 하나의 에러가 나면 모든 작성란이 전부 지워지지 않도록 설정-->
         
         @error('content')
