@@ -29,4 +29,22 @@ class Post extends Model
         return $this->belongsTo(User::class);
 
     }
+
+    public function viewers() {
+        // 나(게시글)를 조회한 user객체들이 반환된다.
+
+        return $this->belongsToMany(User::class);   
+        // return $this->belongsToMany(User::class, 'post_user', 'post_id', 'user_id', 'id', 'id', 'users');
+        // = 아래와 같음 '~~'을 생략가능하다.
+        
+    }
+
+    public function viewed_post() {
+        // return $this->belongsToMany(Post::class);  = 아래와 같음 '~~'을 생략가능하다.
+        return $this->belongsToMany(Post::class, 'post_user', 'user_id', 'post_id', 'id', 'id', 'posts');
+
+        // 
+    }
+
+    
 }

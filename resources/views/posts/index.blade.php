@@ -57,8 +57,11 @@
                 </div>
                 <div>
                     <span>
-                        조회수 : {{ $post->count }} {{ $post->count > 0 ? Str::plural('view', $post->count) : 'view' }}
+                        조회수 : {{ $post->count }} {{ $post->viewers->count() > 0 ? Str::plural('view', $post->viewers->count()) : 'view' }}
                       <!-- 조회수가 0이면 '조회수' 글이 안뜨도록 -->
+                      <!-- 0 보다 크면 plural 아니면 view -->
+
+                      <!-- 여기 수정다시해야됨 내일 수정하기 , 조회하면 DB에는 저장되지만 조회수가 안올라감-->
                     </span>
                 </div>    
                 <hr>
