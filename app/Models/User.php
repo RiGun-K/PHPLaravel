@@ -19,6 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        // GithubAuthController.php에 설정된 users 테이블에 삽입하는데에 값을 동일하게 선언해준다.
         'name',
         'email',
         'password',
