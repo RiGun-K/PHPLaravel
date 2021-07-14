@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\PostsController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
@@ -60,3 +61,5 @@ Route::put('/posts/{id}',[PostsController::class, 'update'])->name('post.update'
 
 Route::delete('/posts/{id}',[PostsController::class, 'destroy'])->name('post.delete');
 // delete방식으로써 삭제버튼 누르면 삭제되도록 설정 
+
+Route::get('/chart/index', [ChartController::class, 'index']);

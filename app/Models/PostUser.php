@@ -15,4 +15,12 @@ class PostUser extends Model
     public $timestamps = false;
     //  If you do not want these columns to be automatically managed by Eloquent, 
     //  you should define a $timestamps property on your model with a value of false:
+
+    public function post() {
+        // post_id와 post는 1:N 관계이므로 
+        // 1은 Hashmany n은 belongsTo
+        return $this->belongsTo(Post::class);
+    }
+    
+
 }
