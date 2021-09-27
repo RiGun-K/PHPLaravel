@@ -11,7 +11,7 @@ class ChartController extends Controller
         $postusers = PostUser::selectRaw('post_id, count(*) cnt')
                         ->groupBy('post_id')
                         ->orderByDesc('cnt')
-                        ->take(6)->get();           // 6개만 뽑겠다.
+                        ->take(6)->get();           // 6개만 뽑겠습니다.
         return view('chart/index')->with('postusers', $postusers);   // postusers로 넘겨주자 with 사용하여 
     }
 }
