@@ -61,7 +61,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
+
 ## Laravel 을 이용한 게시판 만들기
+
 
 ![image](https://user-images.githubusercontent.com/80092311/147580436-ae6fe468-0f5c-4870-ab77-2b824fff0291.png)
 
