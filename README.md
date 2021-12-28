@@ -11,6 +11,23 @@
 
 ![image](https://user-images.githubusercontent.com/80092311/147580462-19d1ac4f-c3e8-4b4e-a5e4-25578e648151.png)
 
+![image](https://user-images.githubusercontent.com/80092311/147580600-bacc33e1-bffb-4c1f-86d6-b0f84fa427fe.png)
+
+![image](https://user-images.githubusercontent.com/80092311/147580618-9a9fbfbc-9162-43c4-a592-4c0c1d491eb1.png)
+
+![image](https://user-images.githubusercontent.com/80092311/147580647-015bab5c-d7ae-4742-ab7b-06fcc9415358.png)
+
+![image](https://user-images.githubusercontent.com/80092311/147580659-cf5a1dd2-2311-4e5a-b9e4-9acad635ec07.png)
+
+![image](https://user-images.githubusercontent.com/80092311/147580687-25983e67-2f52-4dcb-bb28-0dd2c3481aca.png)
+
+![image](https://user-images.githubusercontent.com/80092311/147580699-d4f49817-007a-4ea3-b554-054f8d4490f1.png)
+
+![image](https://user-images.githubusercontent.com/80092311/147580730-77253805-e2cf-447d-a669-43444c82501f.png)
+
+![image](https://user-images.githubusercontent.com/80092311/147580741-b15e6c64-f076-4924-97bf-8a0753d83292.png)
+
+![image](https://user-images.githubusercontent.com/80092311/147580770-dbf56d5f-6e5b-4d90-b960-b711b6d1b8ab.png)
 
 ## About Laravel
 
